@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigHouse摄影册</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 自定义Tailwind配置 - 苹果风格调色板 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            black: '#1D1D1F', // 苹果主题黑色
+                            white: '#FFFFFF', // 苹果主题白色
+                            gray: '#86868B',  // 苹果主题灰色
+                            lightgray: '#F5F5F7', // 苹果背景浅灰
+                            selection: '#0071E3' // 苹果蓝色高亮
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['SF Pro Display', 'SF Pro Text', 'Roboto', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .apple-hover {
+                @apply transition-all duration-200 hover:text-apple-selection;
+            }
+            .product-card-hover {
+                @apply transition-transform duration-300 hover:scale-[1.008];
+            }
+            .text-balance {
+                text-wrap: balance;
+            }
+        }
+
+        /* 苹果风格滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(134, 134, 139, 0.5);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(134, 134, 139, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-apple-lightgray text-apple-black font-sans antialiased">
+    <!-- 全局顶部通知栏 - 苹果风格 -->
+    <div class="bg-apple-black text-white py-3 text-center text-sm">
+        <p class="apple-hover"><a href="#portfolio" class="underline decoration-1 underline-offset-2">浏览BigHouse最新作品系列 <i class="fa fa-angle-right text-xs"></i></a></p>
+    </div>
+
+    <!-- 导航栏 - 苹果风格 -->
+    <header id="navbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-xl font-semibold tracking-tight">BigHouse</a>
+                </div>
+                
+                <!-- 桌面端导航 -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#portfolio" class="text-apple-gray text-sm apple-hover">作品</a>
+                    <a href="#collections" class="text-apple-gray text-sm apple-hover">系列</a>
+                    <a href="#about" class="text-apple-gray text-sm apple-hover">关于</a>
+                    <a href="#contact" class="text-apple-gray text-sm apple-hover">联系</a>
+                </div>
+                
+                <!-- 功能按钮区 -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <button class="text-apple-gray hover:text-apple-black transition-colors">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <button id="upload-btn" class="text-sm bg-apple-selection text-white px-4 py-1.5 rounded-full hover:bg-[#0077ED] transition-colors">
+                        上传作品
+                    </button>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-apple-black">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-apple-white shadow-inner">
+            <div class="px-4 pt-2 pb-4 space-y-3">
+                <a href="#portfolio" class="block py-2 text-sm text-apple-black">作品</a>
+                <a href="#collections" class="block py-2 text-sm text-apple-black">系列</a>
+                <a href="#about" class="block py-2 text-sm text-apple-black">关于</a>
+                <a href="#contact" class="block py-2 text-sm text-apple-black">联系</a>
+                <button class="w-full mt-2 text-sm bg-apple-selection text-white px-4 py-2 rounded-full hover:bg-[#0077ED] transition-colors">
+                    上传作品
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区 - 苹果风格 -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/id/1035/2560/1440" alt="BigHouse精选作品" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/30"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 tracking-tight">
+                <span class="block">BigHouse</span>
+                <span class="text-3xl md:text-4xl lg:text-5xl font-normal text-white/90 mt-4">用影像诠释生命的瞬间</span>
+            </h1>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
+                <a href="#portfolio" class="bg-apple-selection text-white px-8 py-3 rounded-full text-sm hover:bg-[#0077ED] transition-colors w-full sm:w-auto">
+                    浏览作品
+                </a>
+                <a href="#about" class="bg-white/20 backdrop-blur-md text-white px-8 py-3 rounded-full text-sm hover:bg-white/30 transition-colors w-full sm:w-auto">
+                    了解我们
+                </a>
+            </div>
+        </div>
+        
+        <!-- 向下滚动指示器 - 苹果风格 -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fa fa-chevron-down text-white/70"></i>
+        </div>
+    </section>
+
+    <!-- 作品分类区 - 苹果风格 -->
+    <section id="collections" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-light mb-4">作品系列</h2>
+                <p class="text-apple-gray max-w-2xl mx-auto text-balance">BigHouse摄影师捕捉世界各地的美景与人情，创造出令人惊叹的影像艺术品。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 系列1 -->
+                <div class="bg-apple-white rounded-2xl overflow-hidden shadow-sm product-card-hover">
+                    <div class="h-96 overflow-hidden">
+                        <img src="https://picsum.photos/id/1015/800/1000" alt="自然风光系列" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-semibold mb-2">自然风光</h3>
+                        <p class="text-apple-gray mb-4">探索地球的壮丽山河，记录大自然的鬼斧神工。</p>
+                        <a href="#" class="text-apple-selection text-sm inline-flex items-center apple-hover">
+                            查看系列 <i class="fa fa-angle-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 系列2 -->
+                <div class="bg-apple-white rounded-2xl overflow-hidden shadow-sm product-card-hover">
+                    <div class="h-96 overflow-hidden">
+                        <img src="https://picsum.photos/id/1025/800/1000" alt="人文纪实系列" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-semibold mb-2">人文纪实</h3>
+                        <p class="text-apple-gray mb-4">记录人类社会的真实瞬间，传递情感与温度。</p>
+                        <a href="#" class="text-apple-selection text-sm inline-flex items-center apple-hover">
+                            查看系列 <i class="fa fa-angle-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 系列3 -->
+                <div class="bg-apple-white rounded-2xl overflow-hidden shadow-sm product-card-hover">
+                    <div class="h-96 overflow-hidden">
+                        <img src="https://picsum.photos/id/1066/800/1000" alt="商业摄影系列" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-semibold mb-2">商业摄影</h3>
+                        <p class="text-apple-gray mb-4">为品牌和产品创造视觉叙事，提升品牌价值。</p>
+                        <a href="#" class="text-apple-selection text-sm inline-flex items-center apple-hover">
+                            查看系列 <i class="fa fa-angle-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 系列4 -->
+                <div class="bg-apple-white rounded-2xl overflow-hidden shadow-sm product-card-hover">
+                    <div class="h-96 overflow-hidden">
+                        <img src="https://picsum.photos/id/1039/800/1000" alt="艺术创作系列" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-semibold mb-2">艺术创作</h3>
+                        <p class="text-apple-gray mb-4突破传统摄影边界，探索视觉表达的无限可能。</p>
+                        <a href="#" class="text-apple-selection text-sm inline-flex items-center apple-hover">
+                            查看系列 <i class="fa fa-angle-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品展示区 - 苹果风格 -->
+    <section id="portfolio" class="py-20 px-4 bg-apple-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-light mb-4">精选作品</h2>
+                <p class="text-apple-gray max-w-2xl mx-auto text-balance">BigHouse摄影师捕捉的精彩瞬间，每个画面都讲述着独特的故事。</p>
+            </div>
+            
+            <!-- 作品筛选栏 -->
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-12">
+                <button class="filter-btn text-apple-selection border-b-2 border-apple-selection py-1 text-sm">全部</button>
+                <button class="filter-btn text-apple-gray hover:text-apple-black py-1 text-sm transition-colors">风景</button>
+                <button class="filter-btn text-apple-gray hover:text-apple-black py-1 text-sm transition-colors">人像</button>
+                <button class="filter-btn text-apple-gray hover:text-apple-black py-1 text-sm transition-colors">商业</button>
+                <button class="filter-btn text-apple-gray hover:text-apple-black py-1 text-sm transition-colors">艺术</button>
+            </div>
+            
+            <!-- 作品网格 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 作品卡片 -->
+                <div class="group relative overflow-hidden rounded-xl bg-apple-lightgray aspect-square">
+                    <img src="https://picsum.photos/id/1018/800/800" alt="作品1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <h3 class="text-white font-medium mb-2">雪山晨曦</h3>
+                            <div class="flex justify-center gap-4">
+                                <button class="bg-white/20 backdrop-blur-sm text-white p-1.5 rounded-full hover:bg-white/30 transition-colors">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <button class="bg-white/20 backdrop-blur-sm text-white p-1.5 rounded-full hover:bg-white/30 transition-colors">
+                                    <i class="fa fa-heart-o"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl bg-apple-lightgray aspect-square">
+                    <img src="https://picsum.photos/id/1019/800/800" alt="作品2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <h3 class="text-white font-medium mb-2">海岸日落</h3>
+                            <div class="flex justify-center gap-4">
+                                <button class="bg-white/20 backdrop-blur-sm text-white p-1.5 rounded-full hover:bg-white/30 transition-colors">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <button class="bg-white/20 backdrop-blur-sm text-white p-1.5 rounded-full hover:bg-white/30 transition-colors">
+                                    <i class="fa fa-heart-o"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-xl bg-apple-lightgray aspect-square">
+                    <img src="https://picsum.photos/id/1025/800/800" alt="作品3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <h3 class="text-white font-medium mb-2">街头肖像</h3>
+                            <div class="flex justify-center gap-4">
+                                <button class="bg-white/20 backdrop-blur-sm text-white
